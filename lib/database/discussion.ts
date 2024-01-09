@@ -1,4 +1,5 @@
 import supabase from '@/lib/database/database';
+import { HashEmojiAvatar } from '@/lib/utils';
 
 export const getDisscussionListByPage = async (page = 1, pageSize = 20) => {
     const { data, error } = await supabase
@@ -9,6 +10,9 @@ export const getDisscussionListByPage = async (page = 1, pageSize = 20) => {
     if (error) {
         throw error;
     }
+    data.forEach((discussion: any) => {
+        discussion.user_id = HashEmojiAvatar({ user_id: discussion.user_id ? discussion.user_id : 'anonymous' })
+    })
     return data;
 }
 

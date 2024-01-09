@@ -4,7 +4,29 @@ export const getVotesByIds = async (ids: number[]) => {
     const { data, error } = await supabase
         .from('votes')
         .select('*')
-        .in('id', ids);
+        .in('post_id', ids);
+    if (error) {
+        throw error;
+    }
+    return data;
+}
+
+export const getVotesByPostId = async (postId: number) => {
+    const { data, error } = await supabase
+        .from('votes')
+        .select('*')
+        .eq('post_id', postId);
+    if (error) {
+        throw error;
+    }
+    return data;
+}
+
+export const getVotesByPostIds = async (postIds: number[]) => {
+    const { data, error } = await supabase
+        .from('votes')
+        .select('*')
+        .in('post_id', postIds);
     if (error) {
         throw error;
     }
