@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { AVATAR_EMOJI_LIST } from "@/lib/consant"
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
@@ -83,3 +84,21 @@ export const uuid = () => {
 };
 
 export const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+export const HashEmojiAvatar = ({ user_id }: { user_id: string }) => {
+    
+    let hash = 0;
+ 
+    if (user_id.length == 0) return hash;
+ 
+    for (let i = 0; i < user_id.length; i++) {
+        let char = user_id.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+
+    hash = ((hash % AVATAR_EMOJI_LIST.length) + AVATAR_EMOJI_LIST.length) % AVATAR_EMOJI_LIST.length
+    // console.log(user_id + ', ' + hash + ', '+AVATAR_EMOJI_LIST[hash])
+    return (AVATAR_EMOJI_LIST[hash])
+
+}
