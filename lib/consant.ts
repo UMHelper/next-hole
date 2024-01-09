@@ -1,24 +1,8 @@
 export const menuList:MenuItem[]=[
-    // {
-    //     name:'Home',
-    //     href:"/"
-    // },
     {
-        name:'Catalog',
-        href:"/catalog"
+        name:'What2Reg',
+        href:"https://www.umeh.top"
     },
-    {
-        name:'GE Course',
-        href:"/catalog/gecourse"
-    },
-    {
-        name:'Timetable',
-        href:"/timetable"
-    }
-    // {
-    //     name:'Blog',
-    //     href:"/blog"
-    // }
 ]
 
 export const faculty=[
