@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { getDisscussionListByPage } from "@/lib/database/discussion"
 
 export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
-    console.log(discussion)
+    // console.log(discussion)
     return (
         <div className="flex space-x-1 hover:bg-gray-50 rounded p-2">
             <Avatar className="w-10 h-10">
@@ -15,7 +15,7 @@ export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
             <div className="flex justify-between w-full">
                 <div>
                     <div className="">{discussion.title}</div>
-                    <div className="text-xs text-gray-500">{discussion.last_posted_at.replace('T', ' ')}</div>
+                    <div className="text-xs text-gray-500">{discussion.last_posted_at?discussion.last_posted_at.replace('T', ' '):null}</div>
                 </div>
                 <div>
                     <div className="flex justify-center items-center space-x-1">
@@ -29,22 +29,11 @@ export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
     )
 
 }
-const LoadMore = ({ setDiscussions, discussions_lehgth }: { setDiscussions: any, discussions_lehgth: number }) => {
-    const handleLoad = () => {
-        getDisscussionListByPage(Math.round(discussions_lehgth / 20))
-            .then((newDiscussion: any) => {
-            setDiscussions((prev: any) => [...prev, ...newDiscussion])
-        })
-    }
-    return (
-        <div>
-            <button className="bg-gray-100 rounded p-2 w-full" onClick={handleLoad}>Load More</button>
-        </div>
-    )
-}
 
 export const DiscussionList = ({ inital_discussions }: { inital_discussions: any[] }) => {
     const [discussions, setDiscussions] = useState(inital_discussions)
+
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setDiscussions(inital_discussions)
@@ -54,14 +43,22 @@ export const DiscussionList = ({ inital_discussions }: { inital_discussions: any
         <div className=" space-y-2">
             <div>
                 {
-                    inital_discussions.map((discussion, index) => {
+                    discussions.map((discussion, index) => {
                         return (
                             <DiscussionListItem discussion={discussion} key={index} />
                         )
                     })
                 }
             </div>
-            <LoadMore setDiscussions={setDiscussions} discussions_lehgth={discussions.length} />
+            <div>
+            <button className="bg-gray-100 rounded p-2 w-full" onClick={()=>{
+                setLoading(true)
+                getDisscussionListByPage(Math.round(discussions.length/20)).then((res)=>{
+                    setDiscussions(pre=>[...pre,...res])
+                    setLoading(false)
+                })
+            }} disabled={loading}>Load More</button>
+        </div>
         </div>
     )
 }
