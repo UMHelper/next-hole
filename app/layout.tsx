@@ -11,9 +11,6 @@ import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner"
 import Script from 'next/script';
 import { ClerkProvider } from '@clerk/nextjs';
-import Link from 'next/link';
-import UADialog from '@/components/ua-dialog';
-import CsBanner from '@/components/cs-banner';
 import type { Viewport } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
