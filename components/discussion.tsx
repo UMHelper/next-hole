@@ -260,7 +260,7 @@ export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
                 <div>
                     {discussion.first_post ? removeTags(discussion.first_post.content) : ""}
                 </div>
-                {/* <EmojiVote post={discussion.firstPost} /> */}
+                <EmojiVote post={discussion.first_post} />
             </CardContent>
             {//<Separator className='my-2' />
             }
