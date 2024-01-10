@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation"
 import { toast } from "sonner"
 import useSWRInfinite from 'swr/infinite'
 import { Masonry } from "@/components/masonry"
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 const ReplyCard = ({ reply }: { reply: any }) => {
     return (
@@ -292,6 +293,12 @@ export const DiscussionList = () => {
     }
     const { data: discussionsPage, isValidating, setSize, size } = useSWRInfinite(getKey, (url) => fetch(url).then(res => res.json().then(res => res.data)), { revalidateFirstPage: false })
 
+    const [sentryRef] = useInfiniteScroll({
+        loading:isValidating,
+        hasNextPage: true,
+        onLoadMore: ()=>{setSize(size+1)},
+      });
+      
     useEffect(() => {
         console.log(isValidating)
     }, [isValidating])
@@ -313,7 +320,7 @@ export const DiscussionList = () => {
                     })
                 }
             </Masonry>
-            <div>
+            <div className="pt-2" ref={sentryRef}>
                 <button
                     className="bg-gray-100 rounded p-2 w-full"
                     onClick={() => {

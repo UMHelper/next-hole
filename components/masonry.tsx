@@ -65,7 +65,7 @@ export const Masonry=(
       col:number,
       className?:any
   })=>{
-    const [curCol,setCurCol]=useState(col)
+    const [curCol,setCurCol]=useState(2)
     const [colList,setColList]=useState<Array<any>>([])
 
     useEffect(()=>{
