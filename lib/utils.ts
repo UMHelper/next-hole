@@ -102,3 +102,8 @@ export const HashEmojiAvatar = ({ user_id }: { user_id: string }) => {
     return (AVATAR_EMOJI_LIST[hash])
 
 }
+export function removeTags(text:string) {
+    var regex = /<[^>]+>/g;
+    return text.replace(regex, '');
+  }
+  

@@ -12,9 +12,12 @@ export async function GET(req: NextRequest) {
     let discussions = await getDisscussionListByPage(parseInt(page)+1)
     discussions = await Promise.all(
         discussions.map(async (discussion: any) => {
-            discussion.first_post = await getPostById(discussion.first_post_id)
+            // discussion.first_post = await getPostById(discussion.first_post_id)
             
-            discussion.reply_post = (await getPostsByDiscussionId(discussion.id)).filter((post: any) => post.id !== discussion.first_post_id)
+            discussion.reply_post = await getPostsByDiscussionId(discussion.id)
+
+            discussion.first_post = discussion.reply_post.filter((post: any) => post.id === discussion.first_post_id)[0]
+            discussion.reply_post = discussion.reply_post.filter((post: any) => post.id !== discussion.first_post_id)
             return discussion
         }))
     return new NextResponse(JSON.stringify({

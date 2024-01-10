@@ -1,6 +1,6 @@
 'use client'
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { HashEmojiAvatar, cn } from "@/lib/utils"
+import { HashEmojiAvatar, cn, removeTags } from "@/lib/utils"
 import { ChevronsDown, MessageSquare, Reply } from "lucide-react"
 import { useEffect, useState } from "react"
 import { getDisscussionListByPage } from "@/lib/database/discussion"
@@ -14,20 +14,21 @@ import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import { toast } from "sonner"
 import useSWRInfinite from 'swr/infinite'
+import { Masonry } from "@/components/masonry"
 
 const ReplyCard = ({ reply }: { reply: any }) => {
     return (
         <div className="flex ">
 
             <Avatar className="w-8 h-8">
-                <AvatarFallback className="text-sm">{HashEmojiAvatar({ user_id: reply.verify_account })}</AvatarFallback>
+                <AvatarFallback className="text-sm">{reply.user_id}</AvatarFallback>
             </Avatar>
             <div className="ms-2 min-w-0">
                 <Popover>
                     <PopoverTrigger className="inline-flex">
                         <span className='text-gray-400 text-xs'>
                             {/* convert 2022-10-20T03:44:32.219061 to 2022-10-20 */}
-                            {reply.pub_time.split('T')[0]}
+                            {reply.created_at.split('T')[0]}
                         </span>
                     </PopoverTrigger>
                     <PopoverContent side="right" className=" w-fit">
@@ -37,7 +38,7 @@ const ReplyCard = ({ reply }: { reply: any }) => {
                     </PopoverContent>
                 </Popover>
                 <div className='text-sm break-words'>
-                    {reply.content}
+                    {removeTags(reply.content)}
                 </div>
                 <EmojiVote post={reply} />
             </div>
@@ -248,7 +249,7 @@ export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
                 <div className='flex space-x-2 items-center'>
                     <div>
                         <Avatar className="w-10 h-10">
-                            <AvatarFallback className="text-lg bg-blue-50">{HashEmojiAvatar({ user_id: discussion.user_id ? discussion.user_id : "anonymous" })}</AvatarFallback>
+                            <AvatarFallback className="text-lg bg-blue-50">{discussion.user_id}</AvatarFallback>
                         </Avatar>
                     </div>
                     <div className=" font-semibold">{discussion.title}</div>
@@ -256,19 +257,32 @@ export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
             </CardHeader>
             <CardContent className='pb-1'>
                 <div>
-                    {/* {discussion.firstPost.content} */}
+                    {discussion.first_post ? removeTags(discussion.first_post.content) : ""}
                 </div>
                 {/* <EmojiVote post={discussion.firstPost} /> */}
             </CardContent>
             {//<Separator className='my-2' />
             }
             <CardFooter className='block bg-gray-50 py-1 pl-5'>
-                <ReplyComponent discussion={discussion} reply={[]} />
+                <ReplyComponent discussion={discussion} reply={discussion.reply_post} />
             </CardFooter>
         </Card>
 
     )
 
+}
+export const DisscussionListPage = ({ discussionList }: { discussionList: any[] }) => {
+    return (
+        <>
+            {
+                discussionList.length > 0 ? discussionList.map((discussion, index) => {
+                    return (
+                        <DiscussionListItem discussion={discussion} key={index} />
+                    )
+                }) : null
+            }
+        </>
+    )
 }
 
 export const DiscussionList = () => {
@@ -276,9 +290,12 @@ export const DiscussionList = () => {
         if (previousPageData && !previousPageData.length) return null // reached the end
         return `/api/discussion/more_discussions?page=${pageIndex}`
     }
-    const { data: discussionsPage, isLoading, setSize, size } = useSWRInfinite(getKey, (url) => fetch(url).then(res => res.json().then(res => res.data)))
-    console.log(discussionsPage)
-    if (discussionsPage === undefined || isLoading) {
+    const { data: discussionsPage, isValidating, setSize, size } = useSWRInfinite(getKey, (url) => fetch(url).then(res => res.json().then(res => res.data)), { revalidateFirstPage: false })
+
+    useEffect(() => {
+        console.log(isValidating)
+    }, [isValidating])
+    if (discussionsPage === undefined) {
         return (
             <div>
                 Loading
@@ -286,30 +303,24 @@ export const DiscussionList = () => {
         )
     }
     return (
-        <div className=" space-y-2">
-            {
-                discussionsPage.map((discussions:any[], index) => {
-                    return (
-                        <div className=" space-y-2" key={index}>
-                            {
-                                discussions.length > 0 ? discussions.map((discussion, index) => {
-                                    return (
-                                        <DiscussionListItem discussion={discussion} key={index} />
-                                    )
-                                }) : null
-                            }
-                        </div>
-                    )
-                })
-            }
+        <>
+            <Masonry col={3} className="">
+                {
+                    discussionsPage.flat().map((discussion, index) => {
+                        return (
+                            <DiscussionListItem discussion={discussion} key={index} />
+                        )
+                    })
+                }
+            </Masonry>
             <div>
                 <button
                     className="bg-gray-100 rounded p-2 w-full"
                     onClick={() => {
                         setSize(size + 1)
                     }}
-                    disabled={isLoading}>Load More</button>
+                    disabled={isValidating}>{isValidating ? "Loading..." : 'Load More'}</button>
             </div>
-        </div>
+        </>
     )
 }
