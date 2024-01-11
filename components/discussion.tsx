@@ -257,7 +257,7 @@ export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
                 </div>
             </CardHeader>
             <CardContent className='pb-1'>
-                <div>
+                <div style={{maxHeight:'200px', overflow:'hidden'}}>
                     {discussion.first_post ? removeTags(discussion.first_post.content) : ""}
                 </div>
                 {discussion.first_post?<EmojiVote post={discussion.first_post} />:null}
