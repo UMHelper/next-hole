@@ -266,6 +266,7 @@ export const DiscussionListItem = ({ discussion }: { discussion: any }) => {
             }
             <CardFooter className='block bg-gray-50 py-1 pl-5'>
                 <ReplyComponent discussion={discussion} reply={discussion.reply_post} />
+                
             </CardFooter>
         </Card>
 
@@ -293,11 +294,30 @@ export const DiscussionList = () => {
     }
     const { data: discussionsPage, isValidating, setSize, size } = useSWRInfinite(getKey, (url) => fetch(url).then(res => res.json().then(res => res.data)), { revalidateFirstPage: false })
 
+    const [discussions, setDiscussions] = useState<any[]>([])
     const [sentryRef] = useInfiniteScroll({
         loading:isValidating,
         hasNextPage: true,
         onLoadMore: ()=>{setSize(size+1)},
       });
+    useEffect(() => {
+        if (discussionsPage === undefined) {
+            return
+        }
+        let list=discussionsPage.flat().map((discussion: any, index:number) => {
+            return (<DiscussionListItem discussion={discussion} key={index} />)
+        })
+        // add sentryRef in the last ten
+        if (list.length > 10) {
+            list[list.length - 10] = (
+                <div key={list.length - 10} ref={sentryRef}>
+                    {list[list.length - 10]}
+                </div>
+            )
+        }
+
+        setDiscussions([...list])
+    }, [discussionsPage, sentryRef])
       
     useEffect(() => {
         console.log(isValidating)
@@ -311,13 +331,9 @@ export const DiscussionList = () => {
     }
     return (
         <>
-            <Masonry col={3} className="">
+            <Masonry col={2} className="">
                 {
-                    discussionsPage.flat().map((discussion, index) => {
-                        return (
-                            <DiscussionListItem discussion={discussion} key={index} />
-                        )
-                    })
+                    discussions
                 }
             </Masonry>
             <div className="pt-2" ref={sentryRef}>

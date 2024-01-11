@@ -86,9 +86,9 @@ export const uuid = () => {
 export const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export const HashEmojiAvatar = ({ user_id }: { user_id: string }) => {
-    
+    user_id = user_id+''
     let hash = 0;
- 
+    
     if (user_id.length == 0) return hash;
  
     for (let i = 0; i < user_id.length; i++) {
