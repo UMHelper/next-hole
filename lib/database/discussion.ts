@@ -1,7 +1,7 @@
 import supabase from '@/lib/database/database';
 import { HashEmojiAvatar } from '@/lib/utils';
 
-export const getDisscussionListByPage = async (page = 1, pageSize = 20) => {
+export const getDisscussionListByPage = async (page = 1, pageSize = 10) => {
     const { data, error } = await supabase
         .from('discussions')
         .select('*')
