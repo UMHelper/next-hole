@@ -308,10 +308,10 @@ export const DiscussionList = () => {
             return (<DiscussionListItem discussion={discussion} key={index} />)
         })
         // add sentryRef in the last ten
-        if (list.length > 10) {
-            list[list.length - 10] = (
-                <div key={list.length - 10} ref={sentryRef}>
-                    {list[list.length - 10]}
+        if (list.length > 5) {
+            list[list.length - 5] = (
+                <div key={list.length - 5} ref={sentryRef}>
+                    {list[list.length - 5]}
                 </div>
             )
         }
