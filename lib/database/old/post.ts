@@ -1,11 +1,11 @@
 import supabase from '@/lib/database/database';
-import { getVotesByPostId, getVotesByPostIds } from '@/lib/database/vote';
+import { getVotesByPostId, getVotesByPostIds } from '@/lib/database/old/vote';
 import { REACTION_EMOJI_LIST } from '@/lib/consant';
 import { HashEmojiAvatar } from '@/lib/utils';
 
 export const getPostById = async (id: number) => {
     const { data, error } = await supabase
-        .from('posts')
+        .from('flarum_posts')
         .select('*')
         .eq('id', id)
         .single();
@@ -29,7 +29,7 @@ export const getPostById = async (id: number) => {
 
 export const getPostByIds = async (ids: number[]) => {
     const { data, error } = await supabase
-        .from('posts')
+        .from('flarum_posts')
         .select('*')
         .in('id', ids);
     if (error) {
@@ -59,7 +59,7 @@ export const getPostByIds = async (ids: number[]) => {
 
 export const getPostsByDiscussionId = async (discussion_id: number) => {
     const { data, error } = await supabase
-        .from('posts')
+        .from('flarum_posts')
         .select('*')
         .eq('discussion_id', discussion_id)
         .order('id', { ascending: true });
@@ -90,7 +90,7 @@ export const getPostsByDiscussionId = async (discussion_id: number) => {
 
 export const getPostsByDiscussionIds = async (discussion_ids: number[]) => {
     const { data, error } = await supabase
-        .from('posts')
+        .from('flarum_posts')
         .select('*')
         .in('discussion_id', discussion_ids)
         .order('id', { ascending: true });
