@@ -3,7 +3,7 @@ import { CommentCard } from "@/components/comment-card"
 import { REACTION_EMOJI_LIST } from "@/lib/consant"
 
 
-const Comments = ({ comments, course_id, vote_history }: { comments: any[], course_id: string, vote_history: any[] }) => {
+const Comments = ({ comments, vote_history }: { comments: any[], course_id: number, vote_history: any[] }) => {
     // const comments_id_array = comments.map((comment) => comment.id)
     // const vote_history = await getVoteHistory(comments_id_array)
 
@@ -26,7 +26,7 @@ const Comments = ({ comments, course_id, vote_history }: { comments: any[], cour
 
     return (
         <>
-            <Masonry col={3} className="">
+            <Masonry col={2} className="">
                 {non_reply_comments.map((comment: any, index: number) => {
                     return (
                         <div key={index}>

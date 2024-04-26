@@ -1,5 +1,5 @@
 import { getDisscussionListByPage } from "@/lib/database/discussion";
-import { getPostById, getPostByIds, getPostsByDiscussionId, getPostsByDiscussionIds } from "@/lib/database/post";
+import { getPostById, getPostByIds, getPostsByDiscussionId, getPostsByDiscussionIds } from "@/lib/database/old/post";
 import { HashEmojiAvatar } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 

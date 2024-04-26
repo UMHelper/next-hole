@@ -45,6 +45,7 @@ const HashEmojiAvatar = ({ user_id }: { user_id: string }) => {
 
 const ReplyCard = ({ reply }: { reply: any }) => {
     return (
+        
         <div className="flex ">
 
             <Avatar className="w-8 h-8">
@@ -53,9 +54,17 @@ const ReplyCard = ({ reply }: { reply: any }) => {
             <div className="ms-2 min-w-0">
                 <Popover>
                     <PopoverTrigger className="inline-flex">
+
+                        <span className='text-gray-500 font-semibold text-xs'>
+                            Reply #{reply.id}
+                        </span>
+                        <span className='text-gray-400 text-xs mx-1'>
+                                · 
+                        </span>
+
                         <span className='text-gray-400 text-xs'>
-                            {/* convert 2022-10-20T03:44:32.219061 to 2022-10-20 */}
-                            {reply.pub_time.split('T')[0]}
+                            {/* convert 2022-10-20T03:44:32.219061 to 2022-10-20 03:44*/}
+                            {reply.pub_time.split('T')[0] + ' · '+ reply.pub_time.split('T')[1].split(':')[0] + ':' + reply.pub_time.split('T')[1].split(':')[1]}
                         </span>
                     </PopoverTrigger>
                     <PopoverContent side="right" className=" w-fit">
@@ -67,8 +76,8 @@ const ReplyCard = ({ reply }: { reply: any }) => {
                 <div className='text-sm break-words'>
                     {reply.content}
                 </div>
-                {//<EmojiVote comment={reply} />
-                }
+                <EmojiVote comment={reply} />
+                
             </div>
         </div>
     )
@@ -166,7 +175,7 @@ const ReplyComponent = ({ comment, reply_comment }: { comment: any, reply_commen
     const submitReply = (reply: any) => {
         let body = { ...comment }
 
-        if (reply.length < 5 || reply.length > 250) {
+        if (reply.length < 2 || reply.length > 250) {
             toast.error('Reply too short or too long! No spam allowed. ',
                 {
                     description: "回覆太短或太長！禁止無意義垃圾回復。",
@@ -484,91 +493,44 @@ export const CommentCard = (
         <Card className=' hover:shadow-lg mx-auto'>
             <CardHeader className='pb-2 pt-4'  >
                 <div className='flex justify-between'>
-                    <Popover>
-                        <PopoverTrigger >
-                            <Rating
-                                style={{ width: 100 }}
-                                value={comment.recommend}
-                                itemStyles={{
-                                    itemShapes: ThinStar,
-                                    activeBoxColor: ['#e7040f', '#ff6300', '#ffde37', '#61bb00', '#19a974'],
-                                    inactiveBoxColor: '#C7C7C7',
-                                    inactiveFillColor: 'white',
-                                    activeFillColor: 'white',
-                                }}
-                                spaceBetween="small"
-                                halfFillMode="box"
-                                readOnly
-                            />
-                        </PopoverTrigger>
-                        <PopoverContent className="w-48">
-                            <div className='grid grid-cols-3 gap-4 text-xs '>
-                                <div className='text-gray-400 col-span-2 '>
-                                    <div >
-                                        Recommend:
-                                    </div>
-                                    <div >
-                                        Grade:
-                                    </div>
-                                    <div >
-                                        Workload:
-                                    </div>
-                                    <div>
-                                        Difficulty:
-                                    </div>
-                                    <div>
-                                        Usefulness:
-                                    </div>
-                                </div>
 
-                                <div>
-                                    <div className={cn(get_bg(comment.recommend), 'bg-clip-text text-transparent')}>
-                                        {get_gpa(comment.recommend)}
-                                    </div>
-                                    <div className={cn(get_bg(comment.grade), 'bg-clip-text text-transparent')}>
-                                        {get_gpa(comment.grade)}
-                                    </div>
-                                    <div className={cn(get_bg(comment.assignment), 'bg-clip-text text-transparent')}>
-                                        {get_gpa(comment.assignment)}
-                                    </div>
-                                    <div className={cn(get_bg(comment.hard), 'bg-clip-text text-transparent')}>
-                                        {get_gpa(comment.hard)}
-                                    </div>
-                                    <div className={cn(get_bg(comment.reward), 'bg-clip-text text-transparent')}>
-                                        {get_gpa(comment.reward)}
-                                    </div>
-                                </div>
+                    <div className='flex space-x-2 items-center'>
+                        <div>
+                            <Avatar className="w-8 h-8">
+                                <AvatarFallback className="text-sm">{HashEmojiAvatar({user_id: comment.verify_account})}</AvatarFallback>
+                            </Avatar>
+                        </div>
 
-
-                            </div>
-                        </PopoverContent>
-                    </Popover>
+                        <div className='text-sm font-semibold text-gray-500'>Post #{
+                                comment.id
+                            }</div>
+                    </div>
 
                     {/* if comment.isCurrentUserVoted  show badge*/}
                     <Popover>
-                        <PopoverTrigger className="inline-flex">
+                        <PopoverTrigger className="inline-flex items-center">
 
                             <span className='text-gray-400 text-xs'>
                                 {/* convert 2022-10-20T03:44:32.219061 to 2022-10-20 */}
-                                {comment.pub_time.split('T')[0]}
+                                {comment.pub_time.split('T')[0] + ' · '+ comment.pub_time.split('T')[1].split(':')[0] + ':' + comment.pub_time.split('T')[1].split(':')[1]}
                             </span>
+                            {
+                                /*
                             <span className={
                                 comment.verify === 1 ?
-                                    'text-green-600 text-xs flex mx-2' :
+                                    'text-green-600 text-xs flex ' :
                                     'hidden'
                             }>
                                 <BadgeCheck size={16} strokeWidth={1.75} absoluteStrokeWidth />
-
-                                {/*<div className='px-1 italic'>
+        
+                                /*<div className='px-1 italic'>
                                         Verified
-                                    </div>*/}
-                            </span>
+                                    </div>
+                                    
+                            </span>*/}
 
                         </PopoverTrigger>
                         <PopoverContent className=" w-fit">
-                            <p className='text-xs text-gray-400'>Comment #{
-                                comment.id
-                            }</p>
                             <p className='text-xs'>{
                                 comment.verify === 1 ?
                                     'Verified user (logged in)' :
@@ -578,7 +540,7 @@ export const CommentCard = (
                     </Popover>
                 </div>
             </CardHeader>
-            <CardContent className='pt-2 pb-1'>
+            <CardContent className='pt-1 pb-1'>
                 <CommentDetail comment={comment} env={'review'} />
                 <EmojiVote comment={comment} />
             </CardContent>

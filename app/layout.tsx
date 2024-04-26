@@ -16,8 +16,8 @@ import type { Viewport } from 'next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'Home | WHOLE @ UM',
-    description: 'BBS platform for University of Macau',
+    title: 'Home | WHOLE @ UM 澳大討論區',
+    description: 'Student community platform for University of Macau',
 }
 
 export const viewport: Viewport = {
