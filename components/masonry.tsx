@@ -70,14 +70,11 @@ export const Masonry=(
 
     useEffect(()=>{
         let h = window.innerWidth;
-        if (h<900 && h>=530){
+        if (h>=700){
             setCurCol(2)
         }
-        if (h<530){
+        else {
             setCurCol(1)
-        }
-        if (h>=900){
-            setCurCol(2)
         }
     },[col])
 
@@ -88,14 +85,11 @@ export const Masonry=(
     useEffect(() => {
         const windowResizeUpdate = () => {
             let h = window.innerWidth;
-            if (h<900 && h>=530){
+            if (h>=700){
                 setCurCol(2)
             }
-            if (h<530){
+            else {
                 setCurCol(1)
-            }
-            if (h>=900){
-                setCurCol(2)
             }
         };
         window.addEventListener('resize', windowResizeUpdate);

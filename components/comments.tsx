@@ -26,7 +26,7 @@ const Comments = ({ comments, vote_history }: { comments: any[], course_id: numb
 
     return (
         <>
-            <Masonry col={3} className="">
+            <Masonry col={2} className="">
                 {non_reply_comments.map((comment: any, index: number) => {
                     return (
                         <div key={index}>
