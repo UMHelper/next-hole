@@ -11,7 +11,7 @@ export const ReviewPagination =
         code: string
     }) => {
         return (
-            <Pagination className="py-1 my-1">
+            <Pagination className="py-2 my-3">
                 <PaginationContent>
                     {
                         page_num > 1 ? (

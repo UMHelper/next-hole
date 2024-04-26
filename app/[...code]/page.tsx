@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 
 export function generateMetadata(
     { params }: { params: any }) {
-    const title = `TEST WHOLE @ UM`
+    const title = `WHOLE @ UM 澳大討論區`
 
     return {
         title: title,
@@ -43,12 +43,12 @@ const ReviewPage = async ({ params }: { params: { code: string[] } }) => {
         code = params.code.join('/').replaceAll('%2C', ",").toLowerCase();
     }
 
-    console.log(code)
-    console.log(page_num)
+    //console.log(code)
+    //console.log(page_num)
 
     const prof_info = await getReviewInfo(code);
 
-    console.log(prof_info)
+    //console.log(prof_info)
 
     if (prof_info == undefined) {
         return (
