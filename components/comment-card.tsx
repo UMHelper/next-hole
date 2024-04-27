@@ -148,7 +148,7 @@ const ReplyComponent = ({ comment, reply_comment }: { comment: any, reply_commen
                             <div className='text-xs text-gray-400'>您必須登入以回覆。</div>
                         </div>
                         <div className='py-1 px-2 ml-2 rounded bg-gradient-to-r from-blue-600 to-indigo-500 text-white'>
-                            <SignInButton mode="modal" forceRedirectUrl={pathname} />
+                            <SignInButton mode="modal" redirectUrl={pathname} />
                         </div>
                     </div>
                 )
@@ -168,7 +168,7 @@ const ReplyComponent = ({ comment, reply_comment }: { comment: any, reply_commen
                             <div className='text-xs text-gray-400'>您必須登入以瀏覽全部回覆。</div>
                         </div>
                         <div className='py-1 px-2 ml-2 rounded bg-gradient-to-r from-blue-600 to-indigo-500 text-white'>
-                            <SignInButton mode="modal" forceRedirectUrl={pathname} />
+                            <SignInButton mode="modal" redirectUrl={pathname} />
                         </div>
                     </div>
                 )
@@ -363,7 +363,7 @@ const EmojiVote = ({ comment }: { comment: any }) => {
                             <div className='text-xs text-gray-400'>您必須登入以投票。</div>
                         </div>
                         <div className='py-1 px-2 ml-2 rounded bg-gradient-to-r from-blue-600 to-indigo-500 text-white'>
-                            <SignInButton mode="modal" forceRedirectUrl={pathname} />
+                            <SignInButton mode="modal" redirectUrl={pathname} />
                         </div>
                     </div>
                 )
