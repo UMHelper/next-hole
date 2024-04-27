@@ -28,6 +28,13 @@ export const getComentListByCourseIDAndPage = async (course_id: string, page: nu
     return data.concat(reply) as any[]
 }
 
+export const getTopComments= async (course_id: string, number: number) => {
+    const { data, error }: { data: any, error: any } = await supabase.from('comment').select('*').eq('course_id', course_id).neq('hidden', 1).is('replyto', null)
+    .order('last_replied_time', { ascending: false }).order('pub_time', { ascending: false }).range(0, number-1)
+    // console.log(data,error)
+    return data as any[]
+}
+
 export const getReplyByCommentIDList = async (comment_id_list: string[]) => {
     const { data, error } = await supabase.from('comment').select('*').in('replyto', comment_id_list).neq('hidden', 1)
     // console.log(data)
