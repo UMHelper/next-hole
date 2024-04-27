@@ -65,7 +65,11 @@ export async function POST(request: Request){
             headers:{
                 'Authorization':`Client-ID ${process.env.IMGUR_CLIENT_ID}`
             }
+        }).catch((e)=>{
+            return new NextResponse('Image upload failed',{status:500})
         })
+
+        
         // console.log(formData)
         // console.log(response)
 
