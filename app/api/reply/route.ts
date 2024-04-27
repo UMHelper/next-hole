@@ -21,13 +21,21 @@ export async function POST(request: Request){
     delete body.emoji_vote
     delete body.vote_history
     delete body.title
+    delete body.last_replied_time
 
     const {data,error}:{data:any,error:any}=await supabase.from('comment').insert([body]).select()
 
-    console.log(data,error)
+    //console.log(data,error)
     let reply=data[0]
     reply.emoji_vote=REACTION_EMOJI_LIST.map((emoji:string)=>({emoji:emoji,count:0}))
     reply.vote_history=[]
+
+    // update last_replied_time for parent post
+    await supabase
+    .from('comment')
+    .update({ last_replied_time: body.pub_time })
+    .eq('id', body.replyto)
+
     return NextResponse.json(reply,{status:200})
 
 }

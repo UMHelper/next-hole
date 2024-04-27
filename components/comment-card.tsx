@@ -43,6 +43,12 @@ const HashEmojiAvatar = ({ user_id }: { user_id: string }) => {
 
 }
 
+const convertIsoTimeToMacauTime = (isoTime: string) => {
+    const today = new Date(isoTime);
+    today.setHours(today.getHours() + 8);
+    return today.toISOString().slice(0, 16).replace('T', ' · ')
+}
+
 const ReplyCard = ({ reply }: { reply: any }) => {
     return (
         
@@ -64,7 +70,7 @@ const ReplyCard = ({ reply }: { reply: any }) => {
 
                         <span className='text-gray-400 text-xs'>
                             {/* convert 2022-10-20T03:44:32.219061 to 2022-10-20 03:44*/}
-                            {reply.pub_time.split('T')[0] + ' · '+ reply.pub_time.split('T')[1].split(':')[0] + ':' + reply.pub_time.split('T')[1].split(':')[1]}
+                            {convertIsoTimeToMacauTime(reply.pub_time+'Z')}
                         </span>
                     </PopoverTrigger>
                     <PopoverContent side="right" className=" w-fit">
@@ -526,8 +532,9 @@ export const CommentCard = (
                         <PopoverTrigger className="inline-flex items-center">
 
                             <span className='text-gray-400 text-xs'>
-                                {/* convert 2022-10-20T03:44:32.219061 to 2022-10-20 */}
-                                {comment.pub_time.split('T')[0] + ' · '+ comment.pub_time.split('T')[1].split(':')[0] + ':' + comment.pub_time.split('T')[1].split(':')[1]}
+                                {
+                                    convertIsoTimeToMacauTime(comment.pub_time+'Z')
+                                }
                             </span>
                             {
                                 /*
