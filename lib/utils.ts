@@ -106,4 +106,3 @@ export function removeTags(text:string) {
     var regex = /<[^>]+>/g;
     return text.replace(regex, '');
   }
-  
