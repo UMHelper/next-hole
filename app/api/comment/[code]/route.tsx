@@ -3,8 +3,11 @@ import supabase from '@/lib/database/database';
 import { getReviewInfo } from "@/lib/database/get-prof-info";
 import { put } from '@vercel/blob';
 import { uuid } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(request: Request){
+
+    auth().protect()
     let body = await request.formData()
     console.log(body)
     const course=await getReviewInfo(body.get('code') as string)
@@ -36,6 +39,9 @@ export async function POST(request: Request){
     if (body.get('verify')==="1"){
         data.verify=1
         data.verify_account=body.get('verify_account') as string
+
+        const { userId } = auth();
+        if (data.verify_account!==userId) return new NextResponse('Not Authorised (not logged in)',{status:403})
     }
     else {
         return new NextResponse('Not Authorised (not logged in)',{status:403})
