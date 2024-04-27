@@ -12,6 +12,7 @@ import { Viewport } from "next";
 import { getReviewInfo } from "@/lib/database/get-prof-info";
 import { ReviewReload } from "@/components/review-reload";
 import { ReviewPagination } from "@/components/review-pagination";
+import DrawerSubmit from "@/components/drawer-submit";
 
 export const revalidate = 0
 export const dynamic = "force-dynamic";
@@ -77,11 +78,7 @@ const ReviewPage = async ({ params }: { params: { code: string[] } }) => {
 
                         <div className="content-center">
                             <div className='flex-row flex space-x-2'>
-                                <Link href={'/submit/' + code}>
-                                    <Button className='text-sm px-2 hover:shadow-lg bg-white text-blue-800 hover:bg-gray-200'>
-                                        <ClipboardEdit size={16} /><span> 發表主題 New Post</span>
-                                    </Button>
-                                </Link>
+                                <DrawerSubmit code={code} />
                             </div>
                         </div>
                     </div>
