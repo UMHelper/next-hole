@@ -375,6 +375,16 @@ const EmojiVote = ({ comment }: { comment: any }) => {
                 })
             return
         }
+
+        if (emojiHistory.length>=1 && offset == 0) {
+            if (emojiHistory.filter((emojiH: any) => emojiH.emoji === emoji).length > 0) {
+                toast.error("You have already voted for " + emoji + "!",
+                    {
+                        description: "您已經投票過 " + emoji,
+                    })
+                return
+            }
+        }
         if (offset == 0) {
             if (emojiHistory.filter((emojiH: any) => emojiH.emoji === emoji).length > 0) {
                 toast.error("You have already voted for " + emoji + "!",
@@ -455,7 +465,7 @@ const EmojiVote = ({ comment }: { comment: any }) => {
 
                     <Popover>
                         <PopoverTrigger>
-                            <div className='flex items-center me-2 mb-1 px-2 py-1 rounded-full bg-gray-100 text-gray-800 border-gray-300 border hover:bg-gray-300'>
+                            <div className={cn('flex items-center me-2 mb-1 px-2 py-1 rounded-full bg-gray-100 text-gray-800 border-gray-300 border hover:bg-gray-300', emojiHistory.length>=1?'hidden':'block')}>
                                 <SmilePlus size={12} strokeWidth={2.5} />
                             </div>
                         </PopoverTrigger>
