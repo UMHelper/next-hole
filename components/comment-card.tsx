@@ -363,7 +363,7 @@ const EmojiVote = ({ comment }: { comment: any }) => {
                             <div className='text-xs text-gray-400'>您必須登入以投票。</div>
                         </div>
                         <div className='py-1 px-2 ml-2 rounded bg-gradient-to-r from-blue-600 to-indigo-500 text-white'>
-                            <SignInButton mode="modal" redirectUrl={pathname} />
+                            <SignInButton mode="modal" forceRedirectUrl={pathname} />
                         </div>
                     </div>
                 )
