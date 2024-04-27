@@ -5,7 +5,7 @@ import { HashEmojiAvatar } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-    let discussions = await getTopComments('8964', 3)
+    let discussions = await getTopComments('8964', 5)
     return new NextResponse(JSON.stringify({
         data: discussions,
         code: 1
