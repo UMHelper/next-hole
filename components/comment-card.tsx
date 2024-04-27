@@ -287,6 +287,11 @@ const ReplyComponent = ({ comment, reply_comment }: { comment: any, reply_commen
 const CommentDetail = ({ comment, env }: { comment: any, env: string }) => {
     return (
         <div className='flex flex-col justify-between max-h-[500px] overflow-y-auto'>
+            {comment.title ? 
+            <p className='break-words font-semibold my-2'>
+                {comment.title}
+            </p> : null}
+
             <p className='break-words '>
                 {comment.content}
             </p>

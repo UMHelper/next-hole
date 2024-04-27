@@ -79,7 +79,7 @@ const ReviewPage = async ({ params }: { params: { code: string[] } }) => {
                             <div className='flex-row flex space-x-2'>
                                 <Link href={'/submit/' + code}>
                                     <Button className='text-sm px-2 hover:shadow-lg bg-white text-blue-800 hover:bg-gray-200'>
-                                        <ClipboardEdit size={16} /><span> New Post</span>
+                                        <ClipboardEdit size={16} /><span> 發表主題 New Post</span>
                                     </Button>
                                 </Link>
                             </div>

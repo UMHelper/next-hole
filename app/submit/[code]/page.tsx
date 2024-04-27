@@ -26,6 +26,7 @@ const SubmitPage = ({ params }: { params: any }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const formSchema = z.object({
         code: z.string().min(1).default(params.code),
+        title: z.string().min(3).max(20).default(''),
         content: z.string().min(10).max(2000),
     })
 
@@ -162,13 +163,37 @@ const SubmitPage = ({ params }: { params: any }) => {
 
                             <FormField
                                 control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Title 貼文標題</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Wtite post title here."
+                                                className=""
+                                                {...field}
+                                                disabled={!isSignedIn}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+
+                        </div>
+
+                        <div className=' space-y-2'>
+
+                            <FormField
+                                control={form.control}
                                 name="content"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Comment on the instructor of this course</FormLabel>
+                                        <FormLabel>Content 內文</FormLabel>
                                         <FormControl>
                                             <Textarea
-                                                placeholder="Comment about this course or advice for your fellow students."
+                                                placeholder="Write post content here."
                                                 className="resize-y h-48"
                                                 {...field}
                                                 disabled={!isSignedIn}
