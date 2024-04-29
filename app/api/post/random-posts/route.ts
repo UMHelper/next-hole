@@ -1,5 +1,6 @@
 import { getDisscussionListByPage } from "@/lib/database/discussion";
 import { getRandomComments } from "@/lib/database/get-comment-list";
+import { getReviewInfo } from "@/lib/database/get-prof-info";
 import { getPostById, getPostByIds, getPostsByDiscussionId, getPostsByDiscussionIds } from "@/lib/database/old/post";
 import { HashEmojiAvatar } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";

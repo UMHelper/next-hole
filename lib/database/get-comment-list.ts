@@ -35,16 +35,10 @@ export const getTopComments= async (course_id: string, number: number) => {
     return data as any[]
 }
 
-export const getRandomComments= async (course_id: string, number: number) => {
-    const { data, error }: { data: any, error: any } = await supabase.from('comment').select('*').eq('course_id', course_id).neq('hidden', 1).is('replyto', null)
-    
-    // shuffle the array
-    for (let i = data.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [data[i], data[j]] = [data[j], data[i]];
-    }
-    return data.slice(0,number) as any[]
-
+export const getRandomComments= async (catagory_id: string, random_limit: number) => {
+    const { data, error } = await supabase.rpc('get_random_comments', { catagory_id, random_limit})
+    console.log(error);
+    return data as any[]
 }
 
 export const getReplyByCommentIDList = async (comment_id_list: string[]) => {
