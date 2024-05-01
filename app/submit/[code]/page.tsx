@@ -26,7 +26,7 @@ const SubmitPage = ({ params }: { params: any }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const formSchema = z.object({
         code: z.string().min(1).default(params.code),
-        title: z.string().min(3).max(20).default(''),
+        title: z.string().min(3).max(40).default(''),
         content: z.string().min(10).max(2000),
     })
 
