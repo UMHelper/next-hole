@@ -22,7 +22,9 @@ export const getVoteHistory = async (comment_id_array:string[]) => {
 
 export const getComentListByCourseIDAndPage = async (course_id: string, page: number) => {
     const { data, error }: { data: any, error: any } = await supabase.from('comment').select('*').eq('course_id', course_id).neq('hidden', 1).is('replyto', null)
-    .order('last_replied_time', { ascending: false }).order('pub_time', { ascending: false }).range(page * 20, (page + 1) * 20 - 1)
+    .order('last_replied_time', { ascending: false })
+    //.order('pub_time', { ascending: false })
+    .range(page * 20, (page + 1) * 20 - 1)
     // console.log(data,error)
     const reply = await getReplyByCommentIDList(data.map((comment: any) => comment.id))
     return data.concat(reply) as any[]
@@ -30,7 +32,9 @@ export const getComentListByCourseIDAndPage = async (course_id: string, page: nu
 
 export const getTopComments= async (course_id: string, number: number) => {
     const { data, error }: { data: any, error: any } = await supabase.from('comment').select('*').eq('course_id', course_id).neq('hidden', 1).is('replyto', null)
-    .order('last_replied_time', { ascending: false }).order('pub_time', { ascending: false }).range(0, number-1)
+    .order('last_replied_time', { ascending: false })
+    //.order('pub_time', { ascending: false })
+    .range(0, number-1)
     // console.log(data,error)
     return data as any[]
 }

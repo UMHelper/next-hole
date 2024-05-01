@@ -29,6 +29,7 @@ export async function POST(request: Request){
     data.title=body.get('title') as string
     // // 2021-10-10T16:00:00.000Z
     data.pub_time=new Date().toISOString().slice(0, 19).replace('T', ' ')
+    data.last_replied_time=data.pub_time
     const id:any=await supabase.from('comment').select('id').order('id',{ascending:false}).limit(1)
     
     // DO NOT CHANGE THIS ID 
