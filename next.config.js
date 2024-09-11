@@ -3,6 +3,16 @@ const nextConfig = {
     images: {
         domains: ['img.clerk.com','erdqyqa4vgrnyxnx.public.blob.vercel-storage.com'],
     },
+    async headers() {
+        return [
+            {
+                source: "/api/:path*",
+                headers: [
+                    { key: "Access-Control-Allow-Origin", value: "umeh.top" },
+]
+            }
+        ]
+    }
 }
 
 const pwaConfig = {
