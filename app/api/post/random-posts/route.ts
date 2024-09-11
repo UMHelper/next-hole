@@ -5,6 +5,8 @@ import { getPostById, getPostByIds, getPostsByDiscussionId, getPostsByDiscussion
 import { HashEmojiAvatar } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
+export const revalidate = 0;
+
 export async function GET(req: NextRequest) {
     let discussions = await getRandomComments('8964', 10)
     return new NextResponse(JSON.stringify({
