@@ -8,7 +8,7 @@ const nextConfig = {
             {
                 source: "/api/:path*",
                 headers: [
-                    { key: "Access-Control-Allow-Origin", value: "umeh.top" },
+                    { key: "Access-Control-Allow-Origin", value: "www.umeh.top" },
 ]
             }
         ]
