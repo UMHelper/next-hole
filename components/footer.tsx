@@ -27,8 +27,14 @@ const Footer = async () => {
                     <Link href='https://github.com/UMHelper/next-web/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+'>
                         GitHub
                     </Link>
-                    <Link href='https://whole.umeh.top/public/p/2-terms-of-service'>
+                    <Link href='https://github.com/UMHelper/Feedback-and-Join-Us/blob/master/WHOLE-TOS.md'>
                         Terms of Service
+                    </Link>
+                    <Link href='https://github.com/UMHelper/Feedback-and-Join-Us/blob/master/WHOLE-Privacy-Policy.md'>
+                        Privacy Policy
+                    </Link>
+                    <Link href='https://github.com/UMHelper/Feedback-and-Join-Us/blob/master/WHOLE-Community-Guidelines.md'>
+                        Community Guidelines
                     </Link>
                     <Link href='https://docs.google.com/forms/d/1_HrH0jJ9Fyxu_dmW1xGsn9Hq1ZtN9nFG-Jangj_BNVk/'>
                         Feedback
